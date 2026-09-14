@@ -12,6 +12,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from starlette.middleware.base import BaseHTTPMiddleware
 
 from backend.app.api.routes import router as api_router
+from backend.app.api.ws import ws_router
 from backend.app.core.config import settings
 from backend.app.core.security import RedactedLogFilter
 from backend.app.models.db import init_db
@@ -79,6 +80,7 @@ app.add_middleware(SecurityHeadersMiddleware)
 # Mount API Routers
 app.include_router(api_router, prefix=settings.API_V1_STR)
 app.include_router(api_router)  # Also mount at root for /health, /version, /events convenience
+app.include_router(ws_router)
 
 
 @app.get("/")
