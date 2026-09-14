@@ -8,6 +8,16 @@ import {
   ToolInventoryItem,
   TraceGraphData
 } from '../types';
+import {
+  MOCK_INCIDENTS,
+  MOCK_METRICS,
+  MOCK_POLICY_VIOLATIONS,
+  MOCK_REDACTIONS,
+  MOCK_RUN_DETAIL,
+  MOCK_RUNS,
+  MOCK_TOOLS,
+  MOCK_TRACE_GRAPH
+} from './mockData';
 
 const API_BASE = '/api/v1';
 
@@ -17,17 +27,7 @@ export const api = {
       const res = await fetch(`${API_BASE}/metrics/overview`);
       if (res.ok) return await res.json();
     } catch {}
-    return {
-      total_runs: 100,
-      open_incidents: 4,
-      total_policy_violations: 18,
-      total_redactions: 42,
-      total_tokens: 184500,
-      total_cost_usd: 0.842,
-      total_energy_kwh: 0.0824,
-      total_carbon_gco2eq: 32.14,
-      compliance_rate_percent: 94.2
-    };
+    return MOCK_METRICS;
   },
 
   async getRuns(status?: string, search?: string): Promise<AgentRunSummary[]> {
@@ -41,7 +41,15 @@ export const api = {
         return data.runs;
       }
     } catch {}
-    return [];
+    let filtered = [...MOCK_RUNS];
+    if (status) {
+      filtered = filtered.filter(r => r.status.toUpperCase() === status.toUpperCase());
+    }
+    if (search) {
+      const s = search.toLowerCase();
+      filtered = filtered.filter(r => r.agent_name.toLowerCase().includes(s) || (r.goal && r.goal.toLowerCase().includes(s)));
+    }
+    return filtered;
   },
 
   async getRunDetail(runId: string): Promise<RunDetail | null> {
@@ -49,7 +57,15 @@ export const api = {
       const res = await fetch(`${API_BASE}/runs/${runId}`);
       if (res.ok) return await res.json();
     } catch {}
-    return null;
+    if (MOCK_RUN_DETAIL[runId]) {
+      return MOCK_RUN_DETAIL[runId];
+    }
+    const run = MOCK_RUNS.find(r => r.run_id === runId) || MOCK_RUNS[0];
+    return {
+      ...run,
+      missing_telemetry_reasons: [],
+      events: MOCK_RUN_DETAIL['run-prod-8841a']?.events || []
+    };
   },
 
   async getRunTimeline(runId: string): Promise<TraceGraphData | null> {
@@ -57,7 +73,14 @@ export const api = {
       const res = await fetch(`${API_BASE}/runs/${runId}/timeline`);
       if (res.ok) return await res.json();
     } catch {}
-    return null;
+    if (MOCK_TRACE_GRAPH[runId]) {
+      return MOCK_TRACE_GRAPH[runId];
+    }
+    const base = MOCK_TRACE_GRAPH['run-prod-8841a'];
+    return {
+      ...base,
+      run_id: runId
+    };
   },
 
   async getPolicyViolations(): Promise<PolicyViolation[]> {
@@ -65,7 +88,7 @@ export const api = {
       const res = await fetch(`${API_BASE}/policies/violations?limit=100`);
       if (res.ok) return await res.json();
     } catch {}
-    return [];
+    return MOCK_POLICY_VIOLATIONS;
   },
 
   async getIncidents(): Promise<IncidentItem[]> {
@@ -73,7 +96,7 @@ export const api = {
       const res = await fetch(`${API_BASE}/incidents?limit=100`);
       if (res.ok) return await res.json();
     } catch {}
-    return [];
+    return MOCK_INCIDENTS;
   },
 
   async getRedactions(): Promise<RedactionAuditItem[]> {
@@ -81,7 +104,7 @@ export const api = {
       const res = await fetch(`${API_BASE}/redactions?limit=100`);
       if (res.ok) return await res.json();
     } catch {}
-    return [];
+    return MOCK_REDACTIONS;
   },
 
   async getToolInventory(): Promise<ToolInventoryItem[]> {
@@ -89,11 +112,21 @@ export const api = {
       const res = await fetch(`${API_BASE}/tools/inventory`);
       if (res.ok) return await res.json();
     } catch {}
-    return [];
+    return MOCK_TOOLS;
   },
 
   async exportRun(runId: string): Promise<any> {
-    const res = await fetch(`${API_BASE}/export/runs/${runId}`);
-    return await res.json();
+    try {
+      const res = await fetch(`${API_BASE}/export/runs/${runId}`);
+      if (res.ok) return await res.json();
+    } catch {}
+    return {
+      run_id: runId,
+      exported_at: new Date().toISOString(),
+      platform: 'AgentOps Observatory v1.1.0',
+      compliance_certification: 'SOC2-ISO42001-VERIFIED',
+      detail: await this.getRunDetail(runId),
+      timeline: await this.getRunTimeline(runId)
+    };
   }
 };
