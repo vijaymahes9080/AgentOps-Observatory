@@ -37,6 +37,11 @@ jobs:
           export PYTHONPATH=.
           python -m evaluation.evaluator
 
+      - name: Run Ingestion Performance Load Test
+        run: |
+          export PYTHONPATH=.
+          python scripts/load_test.py
+
   frontend-checks:
     runs-on: ubuntu-latest
     steps:
