@@ -1,0 +1,12 @@
+{
+    "name": "vijaymahes9080/agent-ops-observatory",
+    "description": "AgentOps Observatory",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Vijay Mahes",
+            "email": "Vijaypradhap2004@gmail.com"
+        }
+    ],
+    "require": {}
+}
