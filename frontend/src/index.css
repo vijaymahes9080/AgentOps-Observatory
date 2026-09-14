@@ -377,3 +377,25 @@ tr:hover td {
   border: 1px solid rgba(244, 63, 94, 0.3);
   color: #fecdd3;
 }
+
+/* Theme Presets */
+body.theme-cyberpunk {
+  --bg-primary: #05050d;
+  --accent-cyan: #00f0ff;
+  --accent-purple: #ff0055;
+  --border-highlight: rgba(0, 240, 255, 0.4);
+}
+
+body.theme-aurora {
+  --bg-primary: #02120e;
+  --accent-cyan: #2dd4bf;
+  --accent-emerald: #10b981;
+  --accent-purple: #8b5cf6;
+}
+
+body.theme-matrix {
+  --bg-primary: #000c00;
+  --accent-cyan: #00ff66;
+  --accent-emerald: #00cc44;
+  --border-highlight: rgba(0, 255, 102, 0.4);
+}
