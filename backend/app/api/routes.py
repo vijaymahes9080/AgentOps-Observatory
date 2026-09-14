@@ -386,3 +386,24 @@ async def export_run_telemetry(run_id: str, auth: AuthContext = Depends(get_curr
             ]
         }
         return export_payload
+
+
+@router.get("/export/runs/{run_id}/otlp", tags=["Exports"])
+async def export_run_otlp(run_id: str, auth: AuthContext = Depends(get_current_auth)):
+    from backend.app.services.otel import OTLPTransformer
+    async with async_session_factory() as session:
+        run = await session.get(DBAgentRun, run_id)
+        if not run:
+            raise HTTPException(status_code=404, detail="Run not found")
+        events = (await session.execute(
+            select(DBEvent).where(DBEvent.run_id == run_id).order_by(DBEvent.timestamp)
+        )).scalars().all()
+        parsed_events = [
+            ingestion_service._parse_event_object(json.loads(e.payload_json))
+            for e in events
+        ]
+        return OTLPTransformer.transform_to_otlp_resource_spans(
+            run_id=run_id,
+            agent_name=run.agent_name,
+            events=parsed_events
+        )
