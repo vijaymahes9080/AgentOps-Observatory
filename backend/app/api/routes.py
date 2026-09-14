@@ -407,3 +407,13 @@ async def export_run_otlp(run_id: str, auth: AuthContext = Depends(get_current_a
             agent_name=run.agent_name,
             events=parsed_events
         )
+
+
+@router.post("/optimizer/evaluate", tags=["Analytics"])
+async def evaluate_model_routing(payload: Dict[str, Any], auth: AuthContext = Depends(get_current_auth)):
+    from backend.app.services.optimizer import CostOptimizer
+    prompt = payload.get("prompt", "")
+    current_model = payload.get("current_model", "gpt-4o")
+    tokens = payload.get("prompt_tokens", 0)
+    rec = CostOptimizer.evaluate_routing(prompt=prompt, current_model=current_model, prompt_tokens=tokens)
+    return rec.model_dump()
