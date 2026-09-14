@@ -35,7 +35,31 @@
 14. **Live WebSocket Streaming**: Real-time bidirectional telemetry streaming endpoint (`/ws/telemetry`).
 15. **Multi-Channel Alerting**: Instant dispatching of security breaches to Slack and Discord webhooks.
 16. **Adversarial Sandbox**: Multi-agent red-teaming simulator evaluating jailbreak resistance.
-17. **High-Density Glassmorphic Dashboard**: 11 dedicated views with modern typography, dark theme, and keyboard navigation.
+17. **High-Density Glassmorphic Dashboard**: 11 dedicated views with modern typography, dark/light themes, and keyboard navigation.
+
+---
+
+## 🖥️ Platform Showcase (Light Theme)
+
+<div align="center">
+
+### 1. Observatory Live Telemetry Stream
+![AgentOps Observatory Live Telemetry Dashboard](docs/images/dashboard_light.png)
+*Real-time multi-agent execution feed with 100% compliance tracking, masked secret counts, and live status badges.*
+
+<br/>
+
+### 2. Trace Timeline & DAG Span Inspector
+![AgentOps Trace DAG and Timeline Inspector](docs/images/trace_dag_light.png)
+*Interactive parent-child execution DAG, model-to-tool linkages, relative offset latency bars, and SHA-256 hash chaining.*
+
+<br/>
+
+### 3. Architecture & Platform Overview
+![AgentOps Observatory Architecture Banner](image.png)
+*Comprehensive zero-trust governance architecture, verified benchmark SLAs, and multi-protocol adapters.*
+
+</div>
 
 ---
 
