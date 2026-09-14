@@ -1,0 +1,26 @@
+FROM python:3.11-slim
+
+WORKDIR /app
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY pyproject.toml .
+RUN pip install --no-cache-dir --upgrade pip
+RUN pip install --no-cache-dir fastapi uvicorn pydantic pydantic-settings sqlalchemy asyncpg aiosqlite redis pyjwt passlib httpx
+
+COPY backend/ ./backend/
+COPY policy/ ./policy/
+COPY redaction/ ./redaction/
+COPY anomaly/ ./anomaly/
+COPY collectors/ ./collectors/
+COPY evaluation/ ./evaluation/
+
+EXPOSE 8000
+
+ENV PYTHONPATH=/app
+
+CMD ["python", "-m", "uvicorn", "backend.main:app", "--host", "0.0.0.0", "--port", "8000"]
