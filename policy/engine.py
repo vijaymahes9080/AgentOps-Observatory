@@ -54,10 +54,10 @@ class PolicyEngine:
     ]
 
     PROMPT_INJECTION_PATTERNS = [
-        re.compile(r"ignore\s+(?:all\s+)?(?:previous|prior|above)\s+instructions", re.IGNORECASE),
-        re.compile(r"disregard\s+(?:all\s+)?(?:safety|system)\s+rules", re.IGNORECASE),
+        re.compile(r"ignore\s+(?:all\s+)?(?:previous|prior|above)\s+(?:instructions|directions)", re.IGNORECASE),
+        re.compile(r"disregard\s+(?:all\s+)?(?:prior\s+)?(?:safety|system)\s+rules", re.IGNORECASE),
         re.compile(r"you\s+are\s+now\s+(?:DAN|unrestricted|jailbroken|free)", re.IGNORECASE),
-        re.compile(r"system\s*override\s*:\s*disable\s*safety", re.IGNORECASE),
+        re.compile(r"system\s*override\s*:\s*(?:disable\s*safety|bypass)", re.IGNORECASE),
         re.compile(r"<\s*\|im_start\|\s*>system", re.IGNORECASE),
         re.compile(r"\[SYSTEM\s+PROMPT\s+OVERRIDE\]", re.IGNORECASE),
         re.compile(r"bypass\s+all\s+policy\s+checks", re.IGNORECASE),
