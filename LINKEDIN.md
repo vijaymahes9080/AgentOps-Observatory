@@ -47,8 +47,9 @@ AgentOps Observatory was built from the ground up to solve this with a **zero-tr
 
 ---
 
-💻 **Explore the repository and run it locally in under 2 minutes:**  
-👉 GitHub: https://github.com/vijaymahes9080/AgentOps-Observatory
+💻 **Explore the repository and test the live interactive demo:**  
+👉 GitHub: https://github.com/vijaymahes9080/AgentOps-Observatory  
+🌐 Live Interactive Demo: https://vijaymahes9080.github.io/AgentOps-Observatory/
 
 Feedback and stars are deeply appreciated! What are your biggest challenges in monitoring autonomous agents in production? Let's discuss in the comments! 👇
 

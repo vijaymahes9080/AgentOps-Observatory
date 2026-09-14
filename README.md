@@ -9,9 +9,12 @@
 [![React](https://img.shields.io/badge/React-18+-61dafb.svg)](https://react.dev)
 [![OpenTelemetry](https://img.shields.io/badge/OpenTelemetry-Compatible-orange.svg)](https://opentelemetry.io)
 [![Code style: Ruff](https://img.shields.io/badge/code%20style-ruff-000000.svg)](https://github.com/astral-sh/ruff)
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-GitHub%20Pages-success?logo=github)](https://vijaymahes9080.github.io/AgentOps-Observatory/)
 
 **Production-grade Observability, Governance, and Audit Platform for AI Agents, MCP Servers, RAG Pipelines, and n8n Workflows.**  
 *Records what happened during an agent execution without exposing secrets or unnecessary personal data.*
+
+🌐 **Live Interactive Demo:** [https://vijaymahes9080.github.io/AgentOps-Observatory/](https://vijaymahes9080.github.io/AgentOps-Observatory/)
 
 </div>
 
